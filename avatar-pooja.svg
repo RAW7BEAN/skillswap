@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-pooja" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <clipPath id="clip-circle-pooja">
+      <circle cx="60" cy="60" r="56" />
+    </clipPath>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="#e0f2fe" />
+  <g clip-path="url(#clip-circle-pooja)">
+    <rect width="120" height="120" fill="url(#bg-pooja)" />
+    <!-- Hair back -->
+    <path d="M34 40c0-16 12-26 26-26s26 10 26 26v46c-8 10-18 12-26 12s-18-2-26-12Z" fill="#292524" />
+    <!-- Shoulders -->
+    <path d="M22 120c0-20 16-32 38-32s38 12 38 32Z" fill="#0369a1" />
+    <path d="M42 120c2-12 8-16 18-16s16 4 18 16Z" fill="#7dd3fc" />
+    <!-- Neck -->
+    <rect x="52" y="68" width="16" height="20" rx="4" fill="#fcd34d" />
+    <!-- Head -->
+    <ellipse cx="60" cy="54" rx="19" ry="22" fill="#fef08a" />
+    <!-- Eyes & Glasses -->
+    <circle cx="53" cy="54" r="2.2" fill="#18181b" />
+    <circle cx="67" cy="54" r="2.2" fill="#18181b" />
+    <rect x="46" y="49" width="13" height="10" rx="3" fill="none" stroke="#0284c7" stroke-width="2" />
+    <rect x="61" y="49" width="13" height="10" rx="3" fill="none" stroke="#0284c7" stroke-width="2" />
+    <line x1="59" y1="54" x2="61" y2="54" stroke="#0284c7" stroke-width="2" />
+    <path d="M54 65q6 4 12 0" fill="none" stroke="#e11d48" stroke-width="2.2" stroke-linecap="round" />
+  </g>
+</svg>
