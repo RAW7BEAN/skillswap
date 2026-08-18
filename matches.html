@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat & Matches | SkillSwap</title>
+    <meta name="description" content="Chat with matched learning peers and schedule 1-on-1 swap sessions.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-chat" class="skip-link">Skip to chat window</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="matches.html" class="active-nav">Chat & Matches</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="profile.html">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Skill Credits Pill -->
+            <a href="profile.html" class="credit-pill" title="Your Skill Credits" aria-label="5 Skill Credits Available">
+                <span aria-hidden="true">🪙</span> <span id="navCreditCount">5</span> Credits
+            </a>
+
+            <!-- Notification Bell -->
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotifDropdown(event)" aria-label="Notifications" title="Notifications">
+                🔔
+                <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-dropdown-header">
+                    <h4>Notifications</h4>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; cursor: pointer;" onclick="markAllNotifsRead()">Mark all as read</span>
+                </div>
+                <div id="notifList">
+                    <div class="notif-item notif-item-unread">
+                        <span>🎉</span>
+                        <div>
+                            <strong>Alex Shrestha</strong> sent you a message about C Pointers swap.
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">10 mins ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu -->
+            <div class="user-menu-wrapper">
+                <button class="user-mini" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-label="Open user menu" aria-haspopup="true">
+                    <div class="mini-avatar" id="navUserAvatar">
+                        <img src="assets/avatar-you.svg" alt="Saaladin" class="mini-avatar-img">
+                    </div>
+                    <span id="navUserName">Saaladin</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <div class="user-dropdown-header">
+                        <strong id="dropdownUserName">Saaladin</strong>
+                        <span id="dropdownUserEmail">saaladin@skillswap.local</span>
+                    </div>
+                    <a href="profile.html" class="user-dropdown-link">🎓 My Skill Passport</a>
+                    <a href="sessions.html" class="user-dropdown-link">📅 Swap Sessions</a>
+                    <a href="settings.html" class="user-dropdown-link">⚙️ Account Settings</a>
+                    <div class="user-dropdown-divider"></div>
+                    <button onclick="handleLogout()" class="user-dropdown-link logout-btn-link">🚪 Log Out</button>
+                </div>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger-btn" onclick="toggleMobileDrawer()" aria-label="Open mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileDrawer()">
+        <div class="mobile-drawer" onclick="event.stopPropagation()">
+            <div class="mobile-drawer-header">
+                <div class="logo">
+                    <a href="index.html">Skill<span>Swap</span></a>
+                </div>
+                <button onclick="toggleMobileDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="discover.html">⚡ Discover Matches</a>
+                <a href="matches.html" class="active-nav">💬 Chat & Matches</a>
+                <a href="sessions.html">📅 Swap Sessions</a>
+                <a href="profile.html">🎓 Skill Passport</a>
+                <a href="settings.html">⚙️ Account Settings</a>
+                <div style="margin-top: 20px; border-top: 1px solid var(--slate-200); padding-top: 20px;">
+                    <button onclick="handleLogout()" class="danger-btn" style="width: 100%;">🚪 Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         CHAT ROOM LAYOUT
+    ========================== -->
+    <main class="chat-page-container" id="main-chat">
+        <div class="chat-layout">
+
+            <!-- SIDEBAR: MATCHES LIST -->
+            <aside class="chat-sidebar" aria-label="Your Connected Matches">
+                <div class="chat-sidebar-header">
+                    <h2>Your Matches 💬</h2>
+                </div>
+
+                <div class="chat-matches-list" id="chatMatchesList">
+                    <!-- Populated via script.js -->
+                </div>
+            </aside>
+
+            <!-- MAIN CHAT PANE -->
+            <section class="chat-main-pane" aria-label="Active Conversation">
+
+                <!-- CHAT HEADER -->
+                <div class="chat-pane-header">
+                    <div class="chat-partner-details">
+                        <div class="mini-avatar" id="chatPartnerAvatar">
+                            <img src="assets/avatar-alex.svg" alt="Alex Shrestha" class="mini-avatar-img">
+                        </div>
+                        <div>
+                            <h3 id="chatPartnerName">Alex Shrestha</h3>
+                            <span id="chatPartnerRole">Teaches UI/UX & Figma • Kathmandu</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="primary-btn schedule-btn" onclick="openSchedulerModal()" aria-label="Schedule a learning session with this partner">
+                            📅 Schedule Session
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MESSAGES SCROLL AREA -->
+                <div class="chat-messages-scroll" id="chatMessagesScroll" aria-live="polite">
+                    <!-- Populated via script.js -->
+                </div>
+
+                <!-- QUICK PROMPTS STRIP -->
+                <div class="quick-prompts-row" aria-label="Quick response prompts">
+                    <button class="quick-prompt-chip" onclick="sendQuickPrompt('Hey! When are you free for a 30-minute swap session?')">
+                        🕒 Propose a time
+                    </button>
+                    <button class="quick-prompt-chip" onclick="sendQuickPrompt('I can help you understand C pointers and arrays first!')">
+                        💡 Offer C lesson
+                    </button>
+                    <button class="quick-prompt-chip" onclick="sendQuickPrompt('Could we do a quick walkthrough on Figma auto-layout?')">
+                        🎨 Ask about Figma
+                    </button>
+                </div>
+
+                <!-- INPUT BAR -->
+                <div class="chat-input-row">
+                    <input type="text" id="chatMessageInput" placeholder="Type a message to your skill partner..." onkeydown="if(event.key === 'Enter') sendChatMessage()" aria-label="Message input">
+                    <button class="send-msg-btn" onclick="sendChatMessage()" title="Send Message" aria-label="Send message">
+                        ➤
+                    </button>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <!-- =========================
+         SCHEDULER MODAL
+    ========================== -->
+    <div class="modal-overlay" id="schedulerModal" role="dialog" aria-modal="true" aria-labelledby="scheduleModalTitle">
+        <div class="modal-card" style="text-align: left; max-width: 480px;">
+            <h2 id="scheduleModalTitle" style="font-size: 22px; margin-bottom: 4px;">📅 Schedule Skill Swap</h2>
+            <p style="margin-bottom: 20px;">Lock in a 1-on-1 swap session with <strong id="schedulerPeerName">Alex Shrestha</strong>.</p>
+
+            <div class="form-group">
+                <label for="sessionDate">Date</label>
+                <input type="date" id="sessionDate" value="2026-08-20">
+            </div>
+
+            <div class="form-group">
+                <label for="sessionTime">Time Slot</label>
+                <input type="text" id="sessionTime" placeholder="e.g. 7:00 PM - 7:45 PM" value="7:00 PM - 7:45 PM">
+            </div>
+
+            <div class="form-group">
+                <label for="sessionTopic">Session Agenda / Topic</label>
+                <input type="text" id="sessionTopic" placeholder="e.g. C Pointers ↔ Figma Auto-layout" value="C Pointers ↔ Figma Auto-layout">
+            </div>
+
+            <div class="form-group">
+                <label for="sessionFormat">Meeting Format</label>
+                <select id="sessionFormat">
+                    <option value="Online (Google Meet)">💻 Online (Google Meet)</option>
+                    <option value="Online (Zoom)">💻 Online (Zoom)</option>
+                    <option value="In Person (Kathmandu / College)">📍 In Person (Kathmandu / College)</option>
+                </select>
+            </div>
+
+            <div class="modal-actions" style="margin-top: 24px;">
+                <button class="secondary-btn" onclick="closeSchedulerModal()">Cancel</button>
+                <button class="primary-btn" onclick="confirmScheduleSession()">Confirm Session ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

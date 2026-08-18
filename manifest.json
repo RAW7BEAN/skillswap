@@ -1,0 +1,17 @@
+{
+  "name": "SkillSwap — Peer Knowledge Exchange",
+  "short_name": "SkillSwap",
+  "description": "Peer-to-peer knowledge and skill exchange platform with matching algorithm, 3-way skill chains, and verifiable Skill Passport.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#6366f1",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

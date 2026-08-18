@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://username.github.io/skillswap/index.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/skillswap/discover.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/skillswap/signup.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/skillswap/matches.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/skillswap/sessions.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://username.github.io/skillswap/profile.html</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.70</priority>
+  </url>
+</urlset>

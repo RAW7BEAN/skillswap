@@ -1,0 +1,125 @@
+/**
+ * SkillSwap - Community Users Database
+ * Includes peer learners with diverse skillsets, locations, avatars, and learning preferences.
+ */
+const users = [
+    {
+        id: 1,
+        name: "Alex Shrestha",
+        role: "UI/UX Designer & BCA Student",
+        location: "Kathmandu, Nepal",
+        avatar: "assets/avatar-alex.svg",
+        avatarClass: "avatar-one",
+        initials: "A",
+        verified: true,
+        rating: 4.9,
+        sessionsCount: 18,
+        availability: "Evenings (6 PM - 9 PM)",
+        teaches: ["UI/UX Design", "Figma", "Design Systems"],
+        teachLevels: { "UI/UX Design": "Advanced", "Figma": "Expert" },
+        wantsToLearn: ["C Programming", "Data Structures"],
+        learningGoals: "College exams & BCA 2nd Sem project",
+        preference: "online",
+        bio: "Designing interfaces for 2+ years. Wanting to master C pointers and data structures for my college semester."
+    },
+    {
+        id: 2,
+        name: "Riya Maharjan",
+        role: "Graphic Designer & Visual Artist",
+        location: "Lalitpur, Nepal",
+        avatar: "assets/avatar-riya.svg",
+        avatarClass: "avatar-two",
+        initials: "R",
+        verified: true,
+        rating: 4.8,
+        sessionsCount: 12,
+        availability: "Weekends & Weekday Afternoons",
+        teaches: ["Graphic Design", "Canva", "Adobe Illustrator"],
+        teachLevels: { "Graphic Design": "Advanced", "Canva": "Expert" },
+        wantsToLearn: ["C Programming", "HTML & CSS"],
+        learningGoals: "Transitioning into frontend development",
+        preference: "both",
+        bio: "Visual artist passionate about branding. Looking for a peer to teach me fundamental programming logic in C and HTML."
+    },
+    {
+        id: 3,
+        name: "Milan Thapa",
+        role: "Frontend Developer & CS Student",
+        location: "Bhaktapur, Nepal",
+        avatar: "assets/avatar-milan.svg",
+        avatarClass: "avatar-three",
+        initials: "M",
+        verified: true,
+        rating: 4.7,
+        sessionsCount: 9,
+        availability: "Flexible / Daily 7 PM",
+        teaches: ["Web Design", "HTML", "CSS", "JavaScript Basics"],
+        teachLevels: { "Web Design": "Intermediate", "HTML": "Advanced", "CSS": "Advanced" },
+        wantsToLearn: ["C Programming", "Algorithms"],
+        learningGoals: "Mastering system programming fundamentals",
+        preference: "in-person",
+        bio: "Web enthusiast from Bhaktapur. Can teach responsive web development in exchange for C language guidance."
+    },
+    {
+        id: 4,
+        name: "Samir Sharma",
+        role: "Photographer & Video Editor",
+        location: "Pokhara, Nepal",
+        avatar: "assets/avatar-samir.svg",
+        avatarClass: "avatar-four",
+        initials: "S",
+        verified: false,
+        rating: 4.6,
+        sessionsCount: 6,
+        availability: "Weekends Flexible",
+        teaches: ["Photography", "Video Editing", "Premiere Pro"],
+        teachLevels: { "Photography": "Advanced", "Video Editing": "Intermediate" },
+        wantsToLearn: ["JavaScript", "Python"],
+        learningGoals: "Building an automated photo portfolio",
+        preference: "online",
+        bio: "Camera gear geek based in Pokhara. Happy to exchange video editing workflows for JavaScript tutorials."
+    },
+    {
+        id: 5,
+        name: "Pooja Gurung",
+        role: "Python Developer & Data Analyst",
+        location: "Kathmandu, Nepal",
+        avatar: "assets/avatar-pooja.svg",
+        avatarClass: "avatar-five",
+        initials: "P",
+        verified: true,
+        rating: 5.0,
+        sessionsCount: 24,
+        availability: "Weekdays 8 PM - 10 PM",
+        teaches: ["Python", "Data Analysis", "SQL"],
+        teachLevels: { "Python": "Expert", "SQL": "Advanced" },
+        wantsToLearn: ["UI/UX Design", "Figma"],
+        learningGoals: "Redesigning my data analytics dashboard UI",
+        preference: "online",
+        bio: "Love data, automation, and Python scripts. Eager to learn Figma UI principles to make better dashboards."
+    },
+    {
+        id: 6,
+        name: "Binod Adhikari",
+        role: "English Communication Coach & Writer",
+        location: "Chitwan, Nepal",
+        avatar: "assets/avatar-binod.svg",
+        avatarClass: "avatar-six",
+        initials: "B",
+        verified: true,
+        rating: 4.9,
+        sessionsCount: 15,
+        availability: "Mornings & Evenings",
+        teaches: ["English Communication", "IELTS Prep", "Technical Writing"],
+        teachLevels: { "English Communication": "Expert" },
+        wantsToLearn: ["Graphic Design", "Canva"],
+        learningGoals: "Creating visuals for educational posts",
+        preference: "online",
+        bio: "Helping students speak English fluently with confidence. Want to learn Canva and basic graphics."
+    }
+];
+
+// Helper to look up users by ID
+function getUserById(id) {
+    return users.find(u => u.id === Number(id)) || null;
+}

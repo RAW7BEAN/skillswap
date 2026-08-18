@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Skill Swap Profile | SkillSwap</title>
+    <meta name="description" content="Create your free SkillSwap profile to exchange skills with peers in your college and city.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-onboarding" class="skip-link">Skip to onboarding form</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="matches.html">Chat & Matches</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="profile.html">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="discover.html" class="secondary-btn" style="padding: 8px 16px; font-size: 13px;">Guest View</a>
+        </div>
+    </header>
+
+    <main class="onboarding-page" id="main-onboarding">
+        <div class="onboarding-container">
+
+            <!-- Progress Bar -->
+            <div class="progress-area" aria-label="Onboarding Progress">
+                <div class="progress-header">
+                    <span id="stepText">Step 1 of 4</span>
+                    <span id="progressPercentage" class="progress-perc">25%</span>
+                </div>
+                <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- STEP 1: Personal Profile -->
+            <section class="onboarding-step active" id="step1" aria-labelledby="step1Heading">
+                <div class="step-icon" aria-hidden="true">👋</div>
+                <h1 id="step1Heading">Tell us about yourself</h1>
+                <p>Let's create your Skill Swap profile so peers can discover you.</p>
+
+                <div class="form-group">
+                    <label for="name">Your Full Name</label>
+                    <input type="text" id="name" placeholder="e.g. Saaladin" value="Saaladin" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="e.g. saaladin@example.com" value="saaladin@skillswap.local" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Where are you located?</label>
+                    <input type="text" id="location" placeholder="e.g. Kathmandu, Nepal" value="Kathmandu, Nepal" required>
+                </div>
+
+                <button class="primary-btn next-btn" onclick="nextStep()">
+                    Continue →
+                </button>
+            </section>
+
+            <!-- STEP 2: What You Teach -->
+            <section class="onboarding-step" id="step2" aria-labelledby="step2Heading">
+                <div class="step-icon" aria-hidden="true">🧠</div>
+                <h1 id="step2Heading">What can you teach?</h1>
+                <p>Tell us about the primary skill you're ready to share with peers.</p>
+
+                <div class="form-group">
+                    <label for="teachSkill">Your Main Skill to Teach</label>
+                    <input type="text" id="teachSkill" placeholder="e.g. C Programming, Python, Design" value="C Programming" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="skillLevel">Your Proficiency Level</label>
+                    <select id="skillLevel">
+                        <option value="Beginner">🌱 Beginner</option>
+                        <option value="Intermediate" selected>🌿 Intermediate</option>
+                        <option value="Advanced">🌳 Advanced</option>
+                        <option value="Expert">🏆 Expert</option>
+                    </select>
+                </div>
+
+                <div class="step-buttons">
+                    <button class="secondary-btn" onclick="previousStep()">Back</button>
+                    <button class="primary-btn" onclick="nextStep()">Continue →</button>
+                </div>
+            </section>
+
+            <!-- STEP 3: What You Want to Learn -->
+            <section class="onboarding-step" id="step3" aria-labelledby="step3Heading">
+                <div class="step-icon" aria-hidden="true">🎯</div>
+                <h1 id="step3Heading">What do you want to learn?</h1>
+                <p>Tell us what topic you're hoping to learn from another member.</p>
+
+                <div class="form-group">
+                    <label for="learnSkill">Skill You Want to Learn</label>
+                    <input type="text" id="learnSkill" placeholder="e.g. UI/UX Design, Figma, JavaScript" value="UI/UX Design" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="learningGoal">Why do you want to learn it?</label>
+                    <select id="learningGoal">
+                        <option value="college" selected>College / Studies</option>
+                        <option value="career">Career Growth</option>
+                        <option value="freelancing">Freelancing</option>
+                        <option value="project">Personal Project</option>
+                        <option value="hobby">Hobby</option>
+                    </select>
+                </div>
+
+                <div class="step-buttons">
+                    <button class="secondary-btn" onclick="previousStep()">Back</button>
+                    <button class="primary-btn" onclick="nextStep()">Continue →</button>
+                </div>
+            </section>
+
+            <!-- STEP 4: Preferences & Availability -->
+            <section class="onboarding-step" id="step4" aria-labelledby="step4Heading">
+                <div class="step-icon" aria-hidden="true">🤝</div>
+                <h1 id="step4Heading">How do you want to learn?</h1>
+                <p>Choose how you'd prefer to connect with your Skill Swap partners.</p>
+
+                <div class="preference-options" role="radiogroup" aria-label="Learning format preference">
+                    <label class="preference-option">
+                        <input type="radio" name="learningType" value="online" checked>
+                        <div>
+                            <strong>💻 Online</strong>
+                            <p>Learn through chat, voice or video calls.</p>
+                        </div>
+                    </label>
+
+                    <label class="preference-option">
+                        <input type="radio" name="learningType" value="in-person">
+                        <div>
+                            <strong>📍 In Person</strong>
+                            <p>Meet and study together in your local city.</p>
+                        </div>
+                    </label>
+
+                    <label class="preference-option">
+                        <input type="radio" name="learningType" value="both">
+                        <div>
+                            <strong>🌎 Both Online & In Person</strong>
+                            <p>Flexible with either format.</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="step-buttons">
+                    <button class="secondary-btn" onclick="previousStep()">Back</button>
+                    <button class="primary-btn" onclick="finishProfile()">Create My Profile ✨</button>
+                </div>
+            </section>
+
+            <!-- SUCCESS STEP -->
+            <section class="onboarding-step" id="successStep" aria-live="assertive">
+                <div class="success-icon" aria-hidden="true">✓</div>
+                <h1>You're all set!</h1>
+                <p>Your Skill Swap profile has been saved. We're matching you with peers based on what you teach and what you want to learn.</p>
+
+                <button class="primary-btn next-btn" onclick="goToDiscover()">
+                    Find My Matches →
+                </button>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

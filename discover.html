@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover Matches | SkillSwap</title>
+    <meta name="description" content="Discover peer learning matches with compatibility scores and explore 3-way Skill Chains.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-discover" class="skip-link">Skip to discover grid</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html" class="active-nav">Discover</a>
+            <a href="matches.html">Chat & Matches</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="profile.html">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Skill Credits Pill -->
+            <a href="profile.html" class="credit-pill" title="Your Skill Credits Balance" aria-label="5 Skill Credits Available">
+                <span aria-hidden="true">🪙</span> <span id="navCreditCount">5</span> Credits
+            </a>
+
+            <!-- Notification Bell -->
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotifDropdown(event)" aria-label="Notifications" title="Notifications">
+                🔔
+                <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-dropdown-header">
+                    <h4>Notifications</h4>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; cursor: pointer;" onclick="markAllNotifsRead()">Mark all as read</span>
+                </div>
+                <div id="notifList">
+                    <div class="notif-item notif-item-unread">
+                        <span>🎉</span>
+                        <div>
+                            <strong>Alex Shrestha</strong> liked your C Programming profile!
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">10 mins ago</span>
+                        </div>
+                    </div>
+                    <div class="notif-item">
+                        <span>🪙</span>
+                        <div>
+                            <strong>+1 Skill Credit</strong> earned for session completion.
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Profile Menu -->
+            <div class="user-menu-wrapper">
+                <button class="user-mini" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-label="Open user menu" aria-haspopup="true">
+                    <div class="mini-avatar" id="navUserAvatar">
+                        <img src="assets/avatar-you.svg" alt="Saaladin" class="mini-avatar-img">
+                    </div>
+                    <span id="navUserName">Saaladin</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+
+                <!-- Dropdown Menu with Logout -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <div class="user-dropdown-header">
+                        <strong id="dropdownUserName">Saaladin</strong>
+                        <span id="dropdownUserEmail">saaladin@skillswap.local</span>
+                    </div>
+                    <a href="profile.html" class="user-dropdown-link">🎓 My Skill Passport</a>
+                    <a href="sessions.html" class="user-dropdown-link">📅 Swap Sessions</a>
+                    <a href="settings.html" class="user-dropdown-link">⚙️ Account Settings</a>
+                    <div class="user-dropdown-divider"></div>
+                    <button onclick="handleLogout()" class="user-dropdown-link logout-btn-link">🚪 Log Out</button>
+                </div>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger-btn" onclick="toggleMobileDrawer()" aria-label="Open mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileDrawer()">
+        <div class="mobile-drawer" onclick="event.stopPropagation()">
+            <div class="mobile-drawer-header">
+                <div class="logo">
+                    <a href="index.html">Skill<span>Swap</span></a>
+                </div>
+                <button onclick="toggleMobileDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="discover.html" class="active-nav">⚡ Discover Matches</a>
+                <a href="matches.html">💬 Chat & Matches</a>
+                <a href="sessions.html">📅 Swap Sessions</a>
+                <a href="profile.html">🎓 Skill Passport</a>
+                <a href="settings.html">⚙️ Account Settings</a>
+                <div style="margin-top: 20px; border-top: 1px solid var(--slate-200); padding-top: 20px;">
+                    <button onclick="handleLogout()" class="danger-btn" style="width: 100%;">🚪 Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+    <main class="discover-page" id="main-discover">
+
+        <!-- HEADER -->
+        <section class="discover-header">
+            <div>
+                <p class="section-label">PEER DISCOVERY ENGINE</p>
+                <h1>Discover your <span>Skill Matches.</span></h1>
+                <p>People who can teach you something you want to learn — and want to learn something you know.</p>
+            </div>
+
+            <div class="header-actions">
+                <a href="settings.html" class="secondary-btn" style="padding: 10px 16px; font-size: 13px;">✏️ Edit Your Skills</a>
+            </div>
+        </section>
+
+        <!-- DYNAMIC SKILLS BANNER -->
+        <section class="your-skills" aria-label="Your active exchange criteria">
+            <div>
+                <p>YOU CAN TEACH</p>
+                <span id="displayUserTeach">C Programming</span>
+            </div>
+
+            <div class="swap-arrow" aria-hidden="true">↔</div>
+
+            <div>
+                <p>YOU WANT TO LEARN</p>
+                <span id="displayUserLearn">UI/UX Design</span>
+            </div>
+        </section>
+
+        <!-- FILTER & TABS BAR -->
+        <section class="discover-filter-bar" aria-label="Search and Filter Matches">
+            <div class="filter-tabs" role="tablist">
+                <button class="filter-tab-btn active" id="tabDirectBtn" onclick="switchDiscoverTab('direct')" role="tab" aria-selected="true">
+                    ⚡ Direct 1:1 Matches
+                </button>
+                <button class="filter-tab-btn" id="tabChainsBtn" onclick="switchDiscoverTab('chains')" role="tab" aria-selected="false">
+                    🔗 3-Way Skill Chains
+                </button>
+            </div>
+
+            <div class="filter-group">
+                <input type="text" id="skillSearchInput" class="filter-input" placeholder="🔍 Search skill, name, or city..." onkeyup="filterMatches()" aria-label="Search skill, peer name, or city">
+                
+                <select id="formatFilter" class="filter-input" onchange="filterMatches()" aria-label="Filter by learning format">
+                    <option value="all">All Formats</option>
+                    <option value="online">💻 Online</option>
+                    <option value="in-person">📍 In Person</option>
+                </select>
+
+                <button class="secondary-btn" style="padding: 8px 14px; font-size: 13px;" onclick="resetFilters()">Reset</button>
+            </div>
+        </section>
+
+        <!-- DIRECT MATCH GRID -->
+        <section class="match-grid" id="matchGrid" aria-live="polite">
+            <!-- Dynamically populated via script.js -->
+        </section>
+
+        <!-- 3-WAY SKILL CHAINS CONTAINER -->
+        <section id="chainsSection" style="display: none;" aria-live="polite">
+            <div style="margin-bottom: 20px;">
+                <h3 style="font-size: 20px; font-weight: 800;">3-Way Knowledge Loops Available</h3>
+                <p style="font-size: 14px; color: var(--slate-500);">These multi-person loops let you learn what you want by teaching a connected 3rd party.</p>
+            </div>
+            <div id="chainsGrid" class="chains-container">
+                <!-- Dynamically populated via script.js -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- =========================
+         MATCH CELEBRATION MODAL
+    ========================== -->
+    <div class="modal-overlay" id="matchModal" role="dialog" aria-modal="true" aria-labelledby="celebrationHeading">
+        <div class="modal-card">
+            <div class="celebration-icon" aria-hidden="true">🎉❤️</div>
+            <h2 id="celebrationHeading">It's a Skill Match!</h2>
+            <p>You and <strong id="celebrationPeerName">Alex Shrestha</strong> have complementary skills and goals! Say hello and arrange your first learning swap.</p>
+
+            <div class="modal-actions">
+                <button class="secondary-btn" onclick="closeMatchModal()">Keep Exploring</button>
+                <a href="matches.html" id="celebrationChatBtn" class="primary-btn">Message Peer Now 💬</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Skill Passport | SkillSwap</title>
+    <meta name="description" content="View your verifiable Skill Passport, earned reputation badges, and Skill Credits wallet.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-profile" class="skip-link">Skip to skill passport</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="matches.html">Chat & Matches</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="profile.html" class="active-nav">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Skill Credits Pill -->
+            <div class="credit-pill" aria-label="5 Skill Credits Available">
+                <span aria-hidden="true">🪙</span> <span id="navCreditCount">5</span> Credits
+            </div>
+
+            <!-- Notification Bell -->
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotifDropdown(event)" aria-label="Notifications" title="Notifications">
+                🔔
+                <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-dropdown-header">
+                    <h4>Notifications</h4>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; cursor: pointer;" onclick="markAllNotifsRead()">Mark all as read</span>
+                </div>
+                <div id="notifList">
+                    <div class="notif-item notif-item-unread">
+                        <span>🏅</span>
+                        <div>
+                            <strong>Badge Unlocked!</strong> You earned the 'Helpful Teacher' badge.
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">1 hour ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu -->
+            <div class="user-menu-wrapper">
+                <button class="user-mini" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-label="Open user menu" aria-haspopup="true">
+                    <div class="mini-avatar" id="navUserAvatar">
+                        <img src="assets/avatar-you.svg" alt="Saaladin" class="mini-avatar-img">
+                    </div>
+                    <span id="navUserName">Saaladin</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <div class="user-dropdown-header">
+                        <strong id="dropdownUserName">Saaladin</strong>
+                        <span id="dropdownUserEmail">saaladin@skillswap.local</span>
+                    </div>
+                    <a href="profile.html" class="user-dropdown-link">🎓 My Skill Passport</a>
+                    <a href="sessions.html" class="user-dropdown-link">📅 Swap Sessions</a>
+                    <a href="settings.html" class="user-dropdown-link">⚙️ Account Settings</a>
+                    <div class="user-dropdown-divider"></div>
+                    <button onclick="handleLogout()" class="user-dropdown-link logout-btn-link">🚪 Log Out</button>
+                </div>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger-btn" onclick="toggleMobileDrawer()" aria-label="Open mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileDrawer()">
+        <div class="mobile-drawer" onclick="event.stopPropagation()">
+            <div class="mobile-drawer-header">
+                <div class="logo">
+                    <a href="index.html">Skill<span>Swap</span></a>
+                </div>
+                <button onclick="toggleMobileDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="discover.html">⚡ Discover Matches</a>
+                <a href="matches.html">💬 Chat & Matches</a>
+                <a href="sessions.html">📅 Swap Sessions</a>
+                <a href="profile.html" class="active-nav">🎓 Skill Passport</a>
+                <a href="settings.html">⚙️ Account Settings</a>
+                <div style="margin-top: 20px; border-top: 1px solid var(--slate-200); padding-top: 20px;">
+                    <button onclick="handleLogout()" class="danger-btn" style="width: 100%;">🚪 Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         PROFILE HERO CARD
+    ========================== -->
+    <main class="profile-page" id="main-profile">
+        <section class="profile-hero-card" aria-label="User profile summary">
+            <div class="profile-main-meta">
+                <div class="profile-big-avatar-wrapper" id="profileBigAvatar">
+                    <img src="assets/avatar-you.svg" alt="Saaladin" class="avatar-img">
+                </div>
+                <div class="profile-details">
+                    <h1 id="profileName">Saaladin <span class="verified-badge" title="Verified Member">✓</span></h1>
+                    <p id="profileRole">BCA Student & Learner</p>
+                    <p id="profileLoc" style="margin-top: 4px;">📍 Kathmandu, Nepal</p>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 20px; text-align: center;">
+                <div style="background: var(--slate-100); padding: 12px 18px; border-radius: var(--radius-md);">
+                    <strong style="display: block; font-size: 20px; color: var(--primary);" id="profileCreditsCount">5</strong>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--slate-500);">🪙 Skill Credits</span>
+                </div>
+                <div style="background: var(--slate-100); padding: 12px 18px; border-radius: var(--radius-md);">
+                    <strong style="display: block; font-size: 20px; color: #d97706;" id="profileRatingText">4.9 / 5.0</strong>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--slate-500);">⭐ Peer Rating</span>
+                </div>
+                <div style="background: var(--slate-100); padding: 12px 18px; border-radius: var(--radius-md);">
+                    <strong style="display: block; font-size: 20px; color: var(--slate-800);" id="profileSessionsCount">4 Swaps</strong>
+                    <span style="font-size: 11px; font-weight: 700; color: var(--slate-500);">Completed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             VERIFIABLE SKILL PASSPORT
+        ========================== -->
+        <section class="passport-container" aria-labelledby="passportHeading">
+            <div class="passport-header">
+                <div>
+                    <h2 id="passportHeading">🎓 Verifiable Skill Passport</h2>
+                    <p style="font-size: 13px; color: var(--slate-500); margin-top: 2px;">
+                        A living record of your peer teaching contributions and learning progress.
+                    </p>
+                </div>
+
+                <div>
+                    <a href="settings.html" class="secondary-btn" style="padding: 8px 16px; font-size: 13px;">✏️ Edit Profile</a>
+                </div>
+            </div>
+
+            <!-- Skills Progress Grid -->
+            <div class="passport-skills-section">
+                <div class="passport-col">
+                    <h3>Skills You Teach (Mastery)</h3>
+                    <div id="passportTeachList">
+                        <!-- Populated via script.js -->
+                    </div>
+                </div>
+
+                <div class="passport-col">
+                    <h3>Skills You Are Learning</h3>
+                    <div id="passportLearnList">
+                        <!-- Populated via script.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Badges & Achievements -->
+            <div>
+                <h3 style="font-size: 14px; font-weight: 800; color: var(--slate-400); letter-spacing: 1px; margin-bottom: 16px; text-transform: uppercase;">
+                    Earned Reputation Badges
+                </h3>
+
+                <div class="badges-grid">
+                    <div class="badge-card">
+                        <div class="badge-icon" aria-hidden="true">🏅</div>
+                        <strong>Helpful Teacher</strong>
+                        <p>Maintained 4.8+ rating across 3+ teaching sessions</p>
+                    </div>
+
+                    <div class="badge-card">
+                        <div class="badge-icon" aria-hidden="true">🔥</div>
+                        <strong>7-Day Streak</strong>
+                        <p>Engaged in peer swaps consistently this week</p>
+                    </div>
+
+                    <div class="badge-card">
+                        <div class="badge-icon" aria-hidden="true">🌱</div>
+                        <strong>Fast Learner</strong>
+                        <p>Completed 2 UI/UX design milestones</p>
+                    </div>
+
+                    <div class="badge-card">
+                        <div class="badge-icon" aria-hidden="true">🛡️</div>
+                        <strong>Verified Swapper</strong>
+                        <p>Identity and college affiliation confirmed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =========================
+             SKILL CREDITS WALLET
+        ========================== -->
+        <section class="passport-container" style="margin-top: 30px;" aria-labelledby="walletHeading">
+            <div class="passport-header">
+                <div>
+                    <h2 id="walletHeading">🪙 Skill Credits Economy</h2>
+                    <p style="font-size: 13px; color: var(--slate-500); margin-top: 2px;">
+                        Teach to earn credits, spend credits to learn anything from verified peers.
+                    </p>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px;">
+                    <h4 style="font-size: 15px; margin-bottom: 8px;">How Credits Work</h4>
+                    <p style="font-size: 13px; color: var(--slate-600); line-height: 1.6;">
+                        • <strong>+1 Credit</strong> for every 30-min session you teach.<br>
+                        • <strong>-1 Credit</strong> to request a 1-on-1 private tutorial.<br>
+                        • <strong>Bonus Credits</strong> for positive 5-star learner reviews!
+                    </p>
+                </div>
+
+                <div style="background: var(--slate-50); border: 1px solid var(--slate-200); border-radius: var(--radius-md); padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;">
+                    <h4 style="font-size: 15px; margin-bottom: 4px;">Want more credits?</h4>
+                    <p style="font-size: 13px; color: var(--slate-500); margin-bottom: 14px;">Host a quick 30-min C or Problem Solving session for a peer.</p>
+                    <a href="discover.html" class="primary-btn" style="padding: 8px 16px; font-size: 13px;">Find Learners to Teach →</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

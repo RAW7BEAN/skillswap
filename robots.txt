@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://username.github.io/skillswap/sitemap.xml

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Sessions | SkillSwap</title>
+    <meta name="description" content="Manage upcoming and completed peer learning sessions and knowledge exchanges.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-sessions" class="skip-link">Skip to learning sessions</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="matches.html">Chat & Matches</a>
+            <a href="sessions.html" class="active-nav">Sessions</a>
+            <a href="profile.html">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Skill Credits Pill -->
+            <a href="profile.html" class="credit-pill" title="Your Skill Credits" aria-label="5 Skill Credits Available">
+                <span aria-hidden="true">🪙</span> <span id="navCreditCount">5</span> Credits
+            </a>
+
+            <!-- Notification Bell -->
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotifDropdown(event)" aria-label="Notifications" title="Notifications">
+                🔔
+                <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-dropdown-header">
+                    <h4>Notifications</h4>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; cursor: pointer;" onclick="markAllNotifsRead()">Mark all as read</span>
+                </div>
+                <div id="notifList">
+                    <div class="notif-item notif-item-unread">
+                        <span>🎉</span>
+                        <div>
+                            <strong>Upcoming Swap:</strong> Figma UI with Alex tomorrow at 7 PM.
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">10 mins ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu -->
+            <div class="user-menu-wrapper">
+                <button class="user-mini" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-label="Open user menu" aria-haspopup="true">
+                    <div class="mini-avatar" id="navUserAvatar">
+                        <img src="assets/avatar-you.svg" alt="Saaladin" class="mini-avatar-img">
+                    </div>
+                    <span id="navUserName">Saaladin</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <div class="user-dropdown-header">
+                        <strong id="dropdownUserName">Saaladin</strong>
+                        <span id="dropdownUserEmail">saaladin@skillswap.local</span>
+                    </div>
+                    <a href="profile.html" class="user-dropdown-link">🎓 My Skill Passport</a>
+                    <a href="sessions.html" class="user-dropdown-link">📅 Swap Sessions</a>
+                    <a href="settings.html" class="user-dropdown-link">⚙️ Account Settings</a>
+                    <div class="user-dropdown-divider"></div>
+                    <button onclick="handleLogout()" class="user-dropdown-link logout-btn-link">🚪 Log Out</button>
+                </div>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger-btn" onclick="toggleMobileDrawer()" aria-label="Open mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileDrawer()">
+        <div class="mobile-drawer" onclick="event.stopPropagation()">
+            <div class="mobile-drawer-header">
+                <div class="logo">
+                    <a href="index.html">Skill<span>Swap</span></a>
+                </div>
+                <button onclick="toggleMobileDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="discover.html">⚡ Discover Matches</a>
+                <a href="matches.html">💬 Chat & Matches</a>
+                <a href="sessions.html" class="active-nav">📅 Swap Sessions</a>
+                <a href="profile.html">🎓 Skill Passport</a>
+                <a href="settings.html">⚙️ Account Settings</a>
+                <div style="margin-top: 20px; border-top: 1px solid var(--slate-200); padding-top: 20px;">
+                    <button onclick="handleLogout()" class="danger-btn" style="width: 100%;">🚪 Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         SESSIONS HUB
+    ========================== -->
+    <main class="sessions-page" id="main-sessions">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; flex-wrap: wrap; gap: 16px;">
+            <div>
+                <p class="section-label">LEARNING & TEACHING SCHEDULE</p>
+                <h1 style="font-size: 34px; font-weight: 800; letter-spacing: -1px;">Your Swap Sessions</h1>
+                <p style="color: var(--slate-500); font-size: 14px; margin-top: 4px;">Track upcoming 1-on-1 peer exchanges and review past learning milestones.</p>
+            </div>
+
+            <div>
+                <a href="matches.html" class="primary-btn" style="padding: 10px 18px; font-size: 13px;">📅 Book via Chat →</a>
+            </div>
+        </div>
+
+        <!-- UPCOMING SESSIONS -->
+        <section style="margin-bottom: 40px;" aria-labelledby="upcomingHeading">
+            <h2 id="upcomingHeading" style="font-size: 18px; font-weight: 800; margin-bottom: 16px; color: var(--slate-900); display: flex; align-items: center; gap: 8px;">
+                <span aria-hidden="true">🟢</span> Upcoming Swaps
+            </h2>
+
+            <div class="sessions-grid" id="upcomingSessionsList" aria-live="polite">
+                <!-- Populated dynamically via script.js -->
+            </div>
+        </section>
+
+        <!-- COMPLETED SESSIONS & REPUTATION -->
+        <section aria-labelledby="completedHeading">
+            <h2 id="completedHeading" style="font-size: 18px; font-weight: 800; margin-bottom: 16px; color: var(--slate-900); display: flex; align-items: center; gap: 8px;">
+                <span aria-hidden="true">✓</span> Completed Exchanges & Reviews
+            </h2>
+
+            <div class="sessions-grid" id="completedSessionsList" aria-live="polite">
+                <!-- Populated dynamically via script.js -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

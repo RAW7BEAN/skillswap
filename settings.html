@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | SkillSwap</title>
+    <meta name="description" content="Manage your SkillSwap profile details, avatar, learning preferences, and notifications.">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <a href="#main-settings" class="skip-link">Skip to account settings</a>
+
+    <!-- =========================
+         NAVIGATION
+    ========================== -->
+    <header class="dashboard-navbar" role="banner">
+        <div class="logo">
+            <a href="index.html" aria-label="SkillSwap Home">
+                <img src="favicon.svg" alt="SkillSwap Icon" class="logo-mark">
+                Skill<span>Swap</span>
+            </a>
+        </div>
+
+        <nav aria-label="Main Navigation">
+            <a href="index.html">Home</a>
+            <a href="discover.html">Discover</a>
+            <a href="matches.html">Chat & Matches</a>
+            <a href="sessions.html">Sessions</a>
+            <a href="profile.html">Skill Passport</a>
+        </nav>
+
+        <div class="nav-actions">
+            <!-- Skill Credits Pill -->
+            <a href="profile.html" class="credit-pill" title="Your Skill Credits" aria-label="5 Skill Credits Available">
+                <span aria-hidden="true">🪙</span> <span id="navCreditCount">5</span> Credits
+            </a>
+
+            <!-- Notification Bell -->
+            <button class="notif-btn" id="notifBtn" onclick="toggleNotifDropdown(event)" aria-label="Notifications" title="Notifications">
+                🔔
+                <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Dropdown -->
+            <div class="notif-dropdown" id="notifDropdown">
+                <div class="notif-dropdown-header">
+                    <h4>Notifications</h4>
+                    <span style="font-size: 11px; color: var(--primary); font-weight: 700; cursor: pointer;" onclick="markAllNotifsRead()">Mark all as read</span>
+                </div>
+                <div id="notifList">
+                    <div class="notif-item notif-item-unread">
+                        <span>🎉</span>
+                        <div>
+                            <strong>Alex Shrestha</strong> sent you a message about C Pointers swap.
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">10 mins ago</span>
+                        </div>
+                    </div>
+                    <div class="notif-item">
+                        <span>🪙</span>
+                        <div>
+                            <strong>+1 Skill Credit</strong> earned for completing a session!
+                            <span style="display: block; font-size: 10px; color: var(--slate-400);">2 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Menu Wrapper -->
+            <div class="user-menu-wrapper">
+                <button class="user-mini" id="userMenuBtn" onclick="toggleUserDropdown(event)" aria-label="Open user menu" aria-haspopup="true">
+                    <div class="mini-avatar" id="navUserAvatar">
+                        <img src="assets/avatar-you.svg" alt="Saaladin" class="mini-avatar-img">
+                    </div>
+                    <span id="navUserName">Saaladin</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+
+                <!-- User Dropdown Menu -->
+                <div class="user-dropdown-menu" id="userDropdown">
+                    <div class="user-dropdown-header">
+                        <strong id="dropdownUserName">Saaladin</strong>
+                        <span id="dropdownUserEmail">saaladin@skillswap.local</span>
+                    </div>
+                    <a href="profile.html" class="user-dropdown-link">🎓 My Skill Passport</a>
+                    <a href="sessions.html" class="user-dropdown-link">📅 Swap Sessions</a>
+                    <a href="settings.html" class="user-dropdown-link">⚙️ Account Settings</a>
+                    <div class="user-dropdown-divider"></div>
+                    <button onclick="handleLogout()" class="user-dropdown-link logout-btn-link">🚪 Log Out</button>
+                </div>
+            </div>
+
+            <!-- Hamburger Button for Mobile -->
+            <button class="hamburger-btn" onclick="toggleMobileDrawer()" aria-label="Open mobile menu">
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileDrawer()">
+        <div class="mobile-drawer" onclick="event.stopPropagation()">
+            <div class="mobile-drawer-header">
+                <div class="logo">
+                    <a href="index.html">Skill<span>Swap</span></a>
+                </div>
+                <button onclick="toggleMobileDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">✕</button>
+            </div>
+            <div class="mobile-nav-links">
+                <a href="index.html">🏠 Home</a>
+                <a href="discover.html">⚡ Discover Matches</a>
+                <a href="matches.html">💬 Chat & Matches</a>
+                <a href="sessions.html">📅 Swap Sessions</a>
+                <a href="profile.html">🎓 Skill Passport</a>
+                <a href="settings.html" class="active-nav">⚙️ Account Settings</a>
+                <div style="margin-top: 20px; border-top: 1px solid var(--slate-200); padding-top: 20px;">
+                    <button onclick="handleLogout()" class="danger-btn" style="width: 100%;">🚪 Log Out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         SETTINGS PAGE CONTENT
+    ========================== -->
+    <main class="settings-page-container" id="main-settings">
+        <div style="margin-bottom: 28px;">
+            <p class="section-label">PREFERENCES & PROFILE</p>
+            <h1 style="font-size: 32px; font-weight: 800; letter-spacing: -1px;">Account Settings</h1>
+            <p style="color: var(--slate-500); font-size: 14px;">Manage your profile details, avatar, learning preferences, and notifications.</p>
+        </div>
+
+        <!-- 1. Profile Information -->
+        <section class="settings-card" aria-labelledby="profileSettingsHeading">
+            <div class="settings-card-header">
+                <h2 id="profileSettingsHeading">👤 Profile Information</h2>
+                <p>Update your public details and choose your avatar icon.</p>
+            </div>
+
+            <form onsubmit="saveProfileSettings(event)">
+                <div class="form-group">
+                    <label>Choose Avatar Portrait</label>
+                    <div class="avatar-selection-row" id="avatarPicker">
+                        <button type="button" class="avatar-choice-btn active" data-avatar="assets/avatar-you.svg" onclick="selectAvatar('assets/avatar-you.svg', this)">
+                            <img src="assets/avatar-you.svg" alt="Default Avatar">
+                        </button>
+                        <button type="button" class="avatar-choice-btn" data-avatar="assets/avatar-alex.svg" onclick="selectAvatar('assets/avatar-alex.svg', this)">
+                            <img src="assets/avatar-alex.svg" alt="Avatar Alex">
+                        </button>
+                        <button type="button" class="avatar-choice-btn" data-avatar="assets/avatar-riya.svg" onclick="selectAvatar('assets/avatar-riya.svg', this)">
+                            <img src="assets/avatar-riya.svg" alt="Avatar Riya">
+                        </button>
+                        <button type="button" class="avatar-choice-btn" data-avatar="assets/avatar-milan.svg" onclick="selectAvatar('assets/avatar-milan.svg', this)">
+                            <img src="assets/avatar-milan.svg" alt="Avatar Milan">
+                        </button>
+                        <button type="button" class="avatar-choice-btn" data-avatar="assets/avatar-pooja.svg" onclick="selectAvatar('assets/avatar-pooja.svg', this)">
+                            <img src="assets/avatar-pooja.svg" alt="Avatar Pooja">
+                        </button>
+                        <button type="button" class="avatar-choice-btn" data-avatar="assets/avatar-binod.svg" onclick="selectAvatar('assets/avatar-binod.svg', this)">
+                            <img src="assets/avatar-binod.svg" alt="Avatar Binod">
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label for="settingsName">Full Name</label>
+                        <input type="text" id="settingsName" value="Saaladin" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settingsEmail">Email Address</label>
+                        <input type="email" id="settingsEmail" value="saaladin@skillswap.local" required>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label for="settingsRole">Role / Headline</label>
+                        <input type="text" id="settingsRole" value="BCA Student & Learner">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settingsLocation">Location / City</label>
+                        <input type="text" id="settingsLocation" value="Kathmandu, Nepal">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="settingsBio">Bio & Learning Philosophy</label>
+                    <textarea id="settingsBio" rows="3">Passionate about computer applications and software logic. Ready to teach C programming in exchange for UI/UX mentorship.</textarea>
+                </div>
+
+                <button type="submit" class="primary-btn" style="padding: 12px 28px;">
+                    Save Profile Changes ✓
+                </button>
+            </form>
+        </section>
+
+        <!-- 2. Notifications & Privacy -->
+        <section class="settings-card" aria-labelledby="notifSettingsHeading">
+            <div class="settings-card-header">
+                <h2 id="notifSettingsHeading">🔔 Notifications & Communication</h2>
+                <p>Control what alerts you receive from peers.</p>
+            </div>
+
+            <div class="toggle-switch-row">
+                <div class="toggle-switch-meta">
+                    <strong>New Match Alerts</strong>
+                    <span>Receive notifications when someone likes your skill profile</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" checked onchange="showToast('Notification preference updated', 'info')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-switch-row">
+                <div class="toggle-switch-meta">
+                    <strong>Session Reminders</strong>
+                    <span>Get reminders 1 hour before scheduled swap calls</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" checked onchange="showToast('Notification preference updated', 'info')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-switch-row">
+                <div class="toggle-switch-meta">
+                    <strong>3-Way Skill Loop Recommendations</strong>
+                    <span>Notify when multi-person chains open up for your desired skills</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" checked onchange="showToast('Notification preference updated', 'info')">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- 3. Account Actions & Reset -->
+        <section class="settings-card" aria-labelledby="dangerHeading" style="border-color: var(--danger-border);">
+            <div class="settings-card-header">
+                <h2 id="dangerHeading" style="color: var(--danger);">🛡️ Session & Account Actions</h2>
+                <p>Manage your login session or reset demonstration state.</p>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <strong>Log Out of Current Session</strong>
+                    <p style="font-size: 13px; color: var(--slate-500);">End your active session on this device.</p>
+                </div>
+                <button onclick="handleLogout()" class="secondary-btn" style="color: var(--danger); border-color: var(--danger-border);">
+                    🚪 Log Out Now
+                </button>
+            </div>
+
+            <div style="margin-top: 20px; border-top: 1px solid var(--slate-100); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <strong>Reset Demo Data to Defaults</strong>
+                    <p style="font-size: 13px; color: var(--slate-500);">Restores initial mock messages, sessions, matches, and credits.</p>
+                </div>
+                <button onclick="resetAllDemoData()" class="danger-btn">
+                    ⚠️ Reset Demo Data
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <p>© 2026 SkillSwap Nepal. Turn your knowledge into opportunities.</p>
+    </footer>
+
+    <!-- Toast container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="users.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
